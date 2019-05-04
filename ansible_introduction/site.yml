@@ -1,0 +1,74 @@
+---
+- hosts: all
+  vars:
+    user: ajones
+  tasks:
+    - name: Create user
+      become: yes
+      user:
+        name: "{{ user }}"
+        state: present
+        shell: /bin/bash
+        group: wheel
+
+    - name: Change Perm on my Root folder
+      become: yes
+      file:
+        path: /home/{{ user }}
+        state: directory
+        mode: 0750
+
+    - name: install common tools
+      become: true
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - bind-utils
+        - net-tools
+        - vim
+        - wget
+
+    - name: Add epel
+      become: true
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install Ngnix
+      become: true
+      yum:
+        name: nginx-1.12.2-2.el7
+
+    - name: upgrade all packages
+      become: yes
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Copye File
+      become: yes
+      copy:
+        src: ./files/index.html
+        dest: /usr/share/nginx/html/index.html
+
+    - name: start nginx
+      become: yes
+      service:
+        name: nginx
+        state: started
+
+    - name: Set authorized key taken from file
+      become: yes
+      authorized_key:
+        user: "{{ user }}"
+        state: present
+        key: "{{ lookup('file', '/home/ajones/.ssh/id_rsa.pub') }}"
+
+    - name: Edit sudoers files with ajones
+      become: yes
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        mode: 0440
+        line: '"{{ user }}" ALL=(root) NOPASSWD: ALL'
