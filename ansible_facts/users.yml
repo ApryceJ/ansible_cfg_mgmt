@@ -1,0 +1,30 @@
+---
+- hosts: all
+  vars:
+    user: [ajones, nsmeds]
+  tasks:
+    - name: Create user
+      become: yes
+      user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+        group: wheel
+      loop: "{{ user }}"
+
+    - name: Set authorized pub key
+      become: yes
+      authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ lookup('file', '{{ item }}.pub') }}"
+      loop: "{{ user }}"
+
+    - name: Edit Sudoers Files with Users
+      become: yes
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        mode: 0440
+        line: '"{{ item }}" ALL=(root) NOPASSWD: ALL'
+      loop: "{{ user }}"
