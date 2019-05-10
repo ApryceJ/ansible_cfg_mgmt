@@ -1,4 +1,13 @@
 ---
 - import_playbook: users.yml
-- import_playbook: group_vars/loadbalancers.yml
+# - import_playbook: group_vars/loadbalancers.yml
 - import_playbook: webserver.yml
+- hosts: loadbalancers
+  become: yes
+  tasks:
+    - name: Update ALL
+      yum:
+        name: "*"
+        state: latest
+  roles:
+    - geerlingguy.haproxy

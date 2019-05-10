@@ -1,4 +1,4 @@
-#!/home/ajones/aj_cm_cloud/ansible_facts/venv/bin/python
+#!/home/ajones/aj_cm_cloud/ansible_roles/venv/bin/python
 
 import sys
 import getopt
