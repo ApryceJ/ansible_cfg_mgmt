@@ -1,0 +1,35 @@
+---
+#  tasks
+- name: install common tools
+  become: true
+  package:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ packages }}"
+
+- name: Install all yum packages
+  become: true
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ yuminstall }}"
+
+- name: upgrade all packages
+  become: yes
+  yum:
+    name: '*'
+    state: latest
+
+- name: Generate index homepage from template
+  become: yes
+  template:
+    src: templates/index.html.j2
+    dest: /usr/share/nginx/html/index.html
+    mode: 0644
+  notify: restart nginx
+
+- name: start nginx
+  become: yes
+  service:
+    name: "{{ webserver_package }}"
+    state: "{{ webserver_service_state }}"

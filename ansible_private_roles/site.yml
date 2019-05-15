@@ -1,6 +1,10 @@
 ---
 - import_playbook: users.yml
-- import_playbook: webserver.yml
+
+- hosts: webservers
+  roles:
+    - webserver
+
 - hosts: loadbalancers
   become: yes
   tasks:
