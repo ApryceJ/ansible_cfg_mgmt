@@ -8,7 +8,7 @@
 # By defining all required packages, anyone can clone this project and easily
 # install all necessary packages with `pip install -r requirements.txt`.
 #
-ansible >= 2.7.0
+ansible >= 2.7.0, <2.8
 ansible-lint >= 4.1.0
 yamllint >= 1.15.0
 boto >= boto-2.49.0

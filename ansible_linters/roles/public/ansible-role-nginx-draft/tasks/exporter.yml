@@ -31,9 +31,16 @@
     dest: /usr/local/bin/
     remote_src: true
 
-- name: Template a file to /etc/files.conf
+- name: Edit the systemd file
   become: true
   template:
     src: nginx-exporter.j2
-    dest: /etc/systemd/system/
+    dest: /etc/systemd/system/nginx-exporter.service
     mode: '0644'
+    newline_sequence: '\r\n'
+
+- name: Make sure exporter is running
+  become: true
+  systemd:
+    state: started
+    name: nginx-exporter.service
