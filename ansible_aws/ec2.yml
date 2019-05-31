@@ -43,10 +43,11 @@
         key_name: "{{ aws_ec2_key_name }}"
         instance_type: "{{ aws_ec2_instance_type }}"
         image: "{{ aws_ec2_ami }}"
+        state: "{{ aws_ec2_resource_state }}"
         wait: yes
         region: "{{ aws_region }}"
         group: "{{ aws_security_group_name }}"
         count: "{{ aws_ec2_instance_count }}"
         vpc_subnet_id: "{{ aws_vpc_subnet_id }}"
         assign_public_ip: yes
-      tags:  ec2
+      tags: ec2

@@ -1,0 +1,19 @@
+---
+- import_playbook: users.yml
+
+#- hosts: webservers
+#  roles:
+#    - ansible-role-nginx-draft
+  tasks:
+    - name: Edit Nginx defualt.conf blockinfile
+      become: true
+      blockinfile:
+        path: /etc/nginx/conf.d/default.conf
+        insertbefore: "#error_page  404              /404.html;"
+        block: |
+          location /nginx_status {
+          stub_status;
+          allow 127.0.0.1;
+          deny all;
+          }
+# stopped at getting this to actually edit the conf file
