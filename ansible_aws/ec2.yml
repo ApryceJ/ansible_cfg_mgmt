@@ -14,28 +14,6 @@
         state: "{{ aws_ec2_resource_state }}"
       tags: ssh
 
-    - name: create security group
-      ec2_group:
-        aws_access_key: "{{ aws_access_key }}"
-        aws_secret_key: "{{ aws_secret_key }}"
-        name: "{{ aws_security_group_name }}"
-        description: "{{ aws_security_group_name }}"
-        vpc_id: "{{ aws_vpc_id }}"
-        region: "{{ aws_region }}"
-        rules:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_ip: "{{ aws_whitelist_cidr }}"
-          - proto: tcp
-            from_port: 22
-            to_port: 22
-            cidr_ip: "{{ aws_whitelist_cidr }}"
-          - proto: tcp
-            from_port: 443
-            to_port: 443
-      tags: sg
-
     - name: Create the instances
       ec2:
         aws_access_key: "{{ aws_access_key }}"
@@ -48,6 +26,6 @@
         region: "{{ aws_region }}"
         group: "{{ aws_security_group_name }}"
         count: "{{ aws_ec2_instance_count }}"
-        vpc_subnet_id: "{{ aws_vpc_subnet_id }}"
+        vpc_subnet_id: "{{ ajsubnet.subnet.id }}"
         assign_public_ip: yes
       tags: ec2

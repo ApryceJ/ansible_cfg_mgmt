@@ -1,0 +1,79 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: create a VPC with dedicated tenancy and a couple of tags
+      ec2_vpc_net:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        name: ajVPC-Ansible
+        cidr_block: "{{ aws_cidr_blk }}"
+        region: "{{ aws_region }}"
+        tenancy: default
+      register: ajvpc
+      tags: createvpc
+
+    - name: create ajinternetgateway
+      ec2_vpc_igw:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ ajvpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        state: present
+      register: ajigw
+      tags: createintgw
+
+    - name: Create subnet for ajvpc
+      ec2_vpc_subnet:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        state: present
+        vpc_id: "{{ ajvpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        cidr: "{{ aws_cidr_subnet }}"
+        resource_tags:
+          Name: ajansiblesubnet
+      register: ajsubnet
+
+    - name: Set up public subnet route table
+      ec2_vpc_route_table:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ ajvpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        tags:
+          Name: ajPublic
+        subnets:
+          - "{{ ajsubnet.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ ajigw.gateway_id }}"
+      register: public_route_table
+
+    - name: create security group
+      ec2_group:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        name: "{{ aws_security_group_name }}"
+        description: "{{ aws_security_group_name }}"
+        vpc_id: "{{ ajvpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        rules:
+         - proto: tcp
+           from_port: 80
+           to_port: 80
+           cidr_ip: "{{ aws_whitelist_cidr }}"
+         - proto: tcp
+           from_port: 22
+           to_port: 22
+           cidr_ip: "{{ aws_whitelist_cidr }}"
+         - proto: tcp
+           from_port: 443
+           to_port: 443
+         - proto: icmp
+           from_port: -1
+           to_port: -1
+           cidr_ip: 0.0.0.0/0
+      tags: sg
