@@ -4,7 +4,7 @@
   gather_facts: true
 
   tasks:
-    - name: create a VPC with dedicated tenancy and a couple of tags
+    - name: create a VPC and tags
       ec2_vpc_net:
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"

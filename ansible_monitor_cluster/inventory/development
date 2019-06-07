@@ -1,8 +1,12 @@
 [webservers]
 monitor1.test ansible_host=10.100.0.50
-monitor2.test ansible_host10.100.0.51
-monitor3.test ansible_host10.100.0.52
-  # prometheus1.test ansible_host10.100.0.40
-  # prometheus2.test ansible_host10.100.0.40
-  # alertmgr1.test ansible_host10.100.0.30
-  # alertmgr2.test ansible_host10.100.0.30
+monitor2.test ansible_host=10.100.0.51
+monitor3.test ansible_host=10.100.0.52
+
+[prometheus]
+  # prometheus1.test ansible_host=10.100.0.40
+  # prometheus2.test ansible_host=10.100.0.40
+
+[alertmgmt]
+  # alertmgr1.test ansible_host=10.100.0.30
+  # alertmgr2.test ansible_host=10.100.0.30

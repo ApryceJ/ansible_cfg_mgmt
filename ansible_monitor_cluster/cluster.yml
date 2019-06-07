@@ -1,9 +1,8 @@
 ---
 - import_playbook: users.yml
-
-#- hosts: webservers
-#  roles:
-#    - ansible-role-nginx-draft
+- hosts: webservers
+  roles:
+    - ansible-role-nginx-draft
   tasks:
     - name: Edit Nginx defualt.conf blockinfile
       become: true
@@ -16,4 +15,6 @@
           allow 127.0.0.1;
           deny all;
           }
+- import_playbook: consul.yml
+#- import_playbook: prometheus
 # stopped at getting this to actually edit the conf file

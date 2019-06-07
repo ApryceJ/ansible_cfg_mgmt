@@ -1,0 +1,39 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    packages: [ bind-utils, net-tools, vim, wget ]
+    yuminstall: [ epel-release, nginx ]
+  tasks:
+    - name: install common tools
+      become: true
+      package:
+        name: "{{ item }}"
+        state: latest
+      loop: "{{ packages }}"
+
+    - name: Install all yum packages
+      become: true
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ yuminstall }}"
+
+    - name: upgrade all packages
+      become: yes
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Generate index homepage from template
+      become: yes
+      template:
+        src: index.html.j2
+        dest: /usr/share/nginx/html/index.html
+
+    - name: start nginx
+      become: yes
+      service:
+        name: nginx
+        state: started

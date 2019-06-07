@@ -1,0 +1,74 @@
+---
+- hosts: all
+
+  tasks:
+  - name: install unzip
+    become: true
+    yum:
+      name: unzip
+      state: present
+
+  - name: Create consul directory
+    become: true
+    file:
+      path: "{{ consul_unpack_dir }}"
+      state: directory
+      mode: '1777'
+      # install this package
+      # https://releases.hashicorp.com/consul/1.5.1/consul_1.5.1_linux_amd64.zip
+
+  - name: Create consul config directory
+    become: true
+    file:
+      path: "{{ consul_config_dir }}"
+      state: directory
+      mode: '1777'
+
+  - name: Create consul data_dir directory
+    become: true
+    file:
+      path: "{{ data_dir }}"
+      state: directory
+      mode: '1777'
+
+  - name: Download consul
+    get_url:
+      url: https://releases.hashicorp.com/consul/1.5.1/consul_1.5.1_linux_amd64.zip
+      dest: "{{ consul_unpack_dir }}"
+      mode: '0777'
+
+  - name: Move consul binary to usr/bin path
+    become: true
+    unarchive:
+      src: "{{ consul_unpack_dir }}/consul_1.5.1_linux_amd64.zip"
+      dest: /usr/bin/
+      remote_src: true
+
+  - name: create systemd service consul
+    become: true
+    template:
+      src: consul.service.j2
+      dest: "{{ consul_service_dir }}/consul.service"
+      mode: '0644'
+      newline_sequence: '\r\n'
+    #notify: reload_systemd
+
+
+  - name: create config file in config.d
+    become: true
+    template:
+      src: config.jason.j2
+      dest: "{{ consul_config_dir }}/config.jason"
+      mode: '0644'
+      newline_sequence: '\r\n'
+
+  - name: Reload systemd
+    become: true
+    shell: |
+      systemctl daemon-reload
+  - name: start and enable consul
+    become: true
+    service:
+      name: consul.service
+      state: started
+      enabled: yes

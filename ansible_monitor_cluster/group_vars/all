@@ -1,0 +1,17 @@
+---
+#setting the ips for the consul cluster
+n1_ip: 10.100.0.50
+n2_ip: 10.100.0.51
+n3_ip: 10.100.0.52
+
+#consul unpack directory
+consul_unpack_dir: /tmp/consul/
+
+#cosul service directory
+consul_service_dir: /etc/systemd/system
+
+#consul config.d dir
+consul_config_dir: /etc/consul.d/
+
+#consul data_dir
+data_dir: /var/consul/

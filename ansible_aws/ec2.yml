@@ -4,6 +4,15 @@
   gather_facts: no
 
   tasks:
+    - name: Get running instances
+      ec2_instance_facts:
+        region: "{{ aws_region }}"
+        filters:
+          instance-state-name: ["running", "shutting-down", "stopping", "stopped"]
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      register: ec2
+
     - name: import ssh key
       ec2_key:
         aws_access_key: "{{ aws_access_key }}"
@@ -28,4 +37,5 @@
         count: "{{ aws_ec2_instance_count }}"
         vpc_subnet_id: "{{ ajsubnet.subnet.id }}"
         assign_public_ip: yes
+      when: ec2.instances | length==0
       tags: ec2
