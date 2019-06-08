@@ -31,6 +31,7 @@
         instance_type: "{{ aws_ec2_instance_type }}"
         image: "{{ aws_ec2_ami }}"
         state: "{{ aws_ec2_resource_state }}"
+        keypair: "{{ aws_ec2_key_name }}"
         wait: yes
         region: "{{ aws_region }}"
         group: "{{ aws_security_group_name }}"

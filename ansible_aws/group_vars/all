@@ -3,7 +3,7 @@
 aws_ec2_resource_state: present
 
 # AMI for CentOS 7 (x86_64) - with Updates HVM
-aws_ec2_ami: ami-49f0762d
+aws_ec2_ami: ami-07ab3281411d31d04
 
 # Set instance type for EC2 instances. Note that `t2.micro` is free tier.
 aws_ec2_instance_type: t2.micro

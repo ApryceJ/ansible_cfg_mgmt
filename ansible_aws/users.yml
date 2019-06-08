@@ -1,8 +1,5 @@
 ---
-- hosts: localhost
-  connection: local
-  gather_facts: false
-
+- hosts: all
   vars:
     user: [ajones, nsmeds]
   tasks:
