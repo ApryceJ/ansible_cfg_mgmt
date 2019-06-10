@@ -72,6 +72,7 @@
          - proto: tcp
            from_port: 443
            to_port: 443
+           cidr_ip: "{{ aws_whitelist_cidr }}"
          - proto: icmp
            from_port: -1
            to_port: -1

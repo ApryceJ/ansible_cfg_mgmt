@@ -7,13 +7,16 @@
 </head>
 <body>
   <h2>
-    Hello world.
+    Hello world - AJ Yo!
   </h2>
   <p>
+    PrivateIP: {{ ansible_default_ipv4['address'] }}<br />
     Interface: {{ ansible_default_ipv4['interface'] }}<br />
-    Default IP: {{ ansible_default_ipv4['address'] }}<br />
-    Gateway: {{ ansible_default_ipv4['gateway'] }}<br />
-    Private IP: {{ ansible_eth1.ipv4['address'] }}<br />
+    MacAddress: {{ ansible_default_ipv4['macaddress'] }}<br />
+    Bios-Version: {{ ansible_bios_version }}<br />
+    Kernel-Version: {{ ansible_kernel }} <br />
+    User: {{ ansible_user_id }}<br />
+
   </p>
 </body>
 </html>

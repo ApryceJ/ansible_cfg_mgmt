@@ -1,29 +1,28 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: all
   gather_facts: true
 
   vars:
     packages: [ bind-utils, net-tools, vim, wget ]
-    yuminstall: [ epel-release, nginx-1.16.0 ]
+    yuminstall: [ epel-release, nginx ]
   tasks:
     - name: install common tools
       become: true
-      package:
+      yum:
         name: "{{ item }}"
         state: latest
       loop: "{{ packages }}"
 
     - name: Install all yum packages
       become: true
-      package:
+      yum:
         name: "{{ item }}"
         state: present
       loop: "{{ yuminstall }}"
 
     - name: upgrade all packages
       become: true
-      package:
+      yum:
         name: '*'
         state: latest
 
@@ -38,3 +37,4 @@
       service:
         name: nginx
         state: started
+        enabled: true
