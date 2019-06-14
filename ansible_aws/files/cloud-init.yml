@@ -1,0 +1,9 @@
+#cloud-config
+# Add users to the system. Users are added after groups are added.
+users:
+  - name: ajones
+    sudo:  ['ALL=(ALL) NOPASSWD:ALL']
+    groups: wheel
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYW9hiOWmNFdSIue8wVOzJgDhxbxIoxom4hSRYkvgbCnI9blpw63YuuleMZt51QS+4i5R3jb/FxZC3//vGkHTuZOpDnFaY8LqZx9QNi7eV9IFzPaLiYHtx+TOeBUYAIhlnPgZgaaNVrO3edAMS9KRq3tlKnbOlsN5shfu9hxCwMRi9xt6HXs812wInwtDkrf4jhlOHwxP+iy/FLghFX//Ne/aGQWJCvDwipzULqvJHZZWQLZgcFM+noJLh9bJvkE8wHU98beTmIKRnJ+gJYJnDc4f47SS/U51yieSNnCDgLRWNBchILpGSAo9gHiKBbGD6E43SgqXpz/CEUa8Til3RmU39k+YgXLXmxJV+3nBTjxHsPG3Pox9liRytMaSYk+b0cbGPqMhPloys4hntZurWRbngwdknwiVaH6CmFdgX9dknTU0efYpR013XcyQTlxz2QBs0k6ka6Ni+3sZHyBW6cI5aPjPQ+BrMuKw1f/Mz09+76HsSk5J/Zs0d8MqooyUKUanvX+0C5hE9u9zdA7FAmCJhX2pdt4kk4azFuqWg0vIre2fvv8aFVyFQhCv1nvtu2jYPYb4XMDTx7fzlm8WCUYhRckd5xqkDo+Y27WQt+WI6nLbrDMjffAsI05SePEYBbDIVSwpbYHpbaj+Xt084voIHDlScFBB0aSza/A85DQ== ajones@sw08

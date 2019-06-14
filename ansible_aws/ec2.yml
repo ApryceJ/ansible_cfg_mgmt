@@ -32,6 +32,7 @@
         image: "{{ aws_ec2_ami }}"
         state: "{{ aws_ec2_resource_state }}"
         keypair: "{{ aws_ec2_key_name }}"
+        user_data: "{{ lookup('file', 'files/cloud-init.yml', errors='warn') }}"
         wait: yes
         region: "{{ aws_region }}"
         group: "{{ aws_security_group_name }}"
