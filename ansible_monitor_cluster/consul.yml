@@ -53,7 +53,6 @@
       newline_sequence: '\r\n'
     #notify: reload_systemd
 
-
   - name: create config file in config.d
     become: true
     template:

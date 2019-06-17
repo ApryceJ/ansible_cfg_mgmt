@@ -25,17 +25,33 @@
       register: ajigw
       tags: createintgw
 
-    - name: Create subnet for ajvpc
+    - name: Create subnet1 for ajvpc
       ec2_vpc_subnet:
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
         state: present
+        az: "{{ aws_region}}a"
         vpc_id: "{{ ajvpc.vpc.id }}"
         region: "{{ aws_region }}"
-        cidr: "{{ aws_cidr_subnet }}"
+        cidr: "{{ aws_cidr_subnet1 }}"
         resource_tags:
-          Name: ajansiblesubnet
-      register: ajsubnet
+          Name: ajansiblesubnet1
+      register: ajsubnet1
+
+    - name: Create subnet2 for ajvpc
+      ec2_vpc_subnet:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        state: present
+        az: "{{ aws_region}}b"
+        vpc_id: "{{ ajvpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        cidr: "{{ aws_cidr_subnet2 }}"
+        resource_tags:
+          Name: ajansiblesubnet2
+      register: ajsubnet2
+
+  #- debug: var=ajsubnet2
 
     - name: Set up public subnet route table
       ec2_vpc_route_table:
@@ -46,7 +62,8 @@
         tags:
           Name: ajPublic
         subnets:
-          - "{{ ajsubnet.subnet.id }}"
+          - "{{ ajsubnet1.subnet.id }}"
+          - "{{ ajsubnet2.subnet.id }}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{ ajigw.gateway_id }}"
@@ -61,6 +78,14 @@
         vpc_id: "{{ ajvpc.vpc.id }}"
         region: "{{ aws_region }}"
         rules:
+         - proto: tcp
+           from_port: 80
+           to_port: 80
+           cidr_ip: "{{ aws_cidr_subnet1 }}"
+         - proto: tcp
+           from_port: 80
+           to_port: 80
+           cidr_ip: "{{ aws_cidr_subnet2 }}"
          - proto: tcp
            from_port: 80
            to_port: 80

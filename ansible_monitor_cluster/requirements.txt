@@ -7,7 +7,10 @@
 #
 # By defining all required packages, anyone can clone this project and easily
 # install all necessary packages with `pip install -r requirements.txt`.
-#
-ansible >= 2.7.0
+# !!!!!! If recreating the virtual env for this project you must copy /usr/lib64/python2.7/site-packges/selinux to the virtual environment
+#     copy it to venv/lib/python2.7/site-packages/
+ansible == 2.7.0
 ansible-lint >= 4.1.0
 yamllint >= 1.15.0
+boto >= boto-2.49.0
+boto3 >= boto3-1.9.138

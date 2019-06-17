@@ -1,3 +1,9 @@
 ---
 # from GitHub
 - src: https://github.com/ApryceJ/ansible-role-nginx-draft
+- src: cloudalchemy.blackbox-exporter
+  version: 0.7.0
+- src: cloudalchemy.node-exporter
+  version: 0.12.1
+- src: cloudalchemy.prometheus
+  version: 2.6.0

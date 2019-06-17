@@ -29,8 +29,8 @@ aws_vpc_id: vpc-849a01ec
 aws_cidr_blk: 10.0.0.0/16
 
 #set mask for subnet
-aws_cidr_subnet: 10.0.1.0/24
-
+aws_cidr_subnet1: 10.0.1.0/24
+aws_cidr_subnet2: 10.0.2.0/24
 # Set VPC subnet ID for resource creation (replace with ID from your own
 # account).
 aws_vpc_subnet_id: subnet-6657de0e

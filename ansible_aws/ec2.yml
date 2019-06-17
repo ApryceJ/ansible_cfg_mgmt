@@ -37,7 +37,7 @@
         region: "{{ aws_region }}"
         group: "{{ aws_security_group_name }}"
         count: "{{ aws_ec2_instance_count }}"
-        vpc_subnet_id: "{{ ajsubnet.subnet.id }}"
+        vpc_subnet_id: "{{ ajsubnet1.subnet.id }}"
         assign_public_ip: yes
       when: ec2.instances | length==0
       tags: ec2
