@@ -7,3 +7,5 @@
   version: 0.12.1
 - src: cloudalchemy.prometheus
   version: 2.6.0
+- src: cloudalchemy.alertmanager
+  version: 0.13.12

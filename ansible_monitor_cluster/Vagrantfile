@@ -8,9 +8,9 @@ nodes = [
   { :hostname => 'monitor2.test',    :ip => '10.100.0.51' },
   { :hostname => 'monitor3.test',    :ip => '10.100.0.52' },
   { :hostname => 'prometheus1.test', :ip => '10.100.0.40' },
-  { :hostname => 'prometheus2.test', :ip => '10.100.0.41' }
-  #{ :hostname => 'alertmgr1.test',    :ip => '10.100.0.30' }
-  #{ :hostname => 'alertmgr2.test',    :ip => '10.100.0.30' }
+  { :hostname => 'prometheus2.test', :ip => '10.100.0.41' },
+  { :hostname => 'alertmgr1.test',   :ip => '10.100.0.30' },
+  { :hostname => 'alertmgr2.test',   :ip => '10.100.0.31' }
 ]
 
 HOSTNAME = "AJWEBSERVER"

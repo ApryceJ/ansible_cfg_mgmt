@@ -5,8 +5,8 @@ monitor3.test ansible_host=10.100.0.52
 
 [prometheus]
 prometheus1.test ansible_host=10.100.0.40
-prometheus2.test ansible_host=10.100.0.40
+prometheus2.test ansible_host=10.100.0.41
 
 [alertmgmt]
-  # alertmgr1.test ansible_host=10.100.0.30
-  # alertmgr2.test ansible_host=10.100.0.30
+alertmgr1.test ansible_host=10.100.0.30
+alertmgr2.test ansible_host=10.100.0.31

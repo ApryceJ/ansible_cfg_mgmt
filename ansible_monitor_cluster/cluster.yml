@@ -52,3 +52,9 @@
   tags:
     - node-exporter
     - exporters
+
+  hosts: alertmgmt
+  roles:
+    - cloudalchemy.alertmanager
+  tags:
+    - alert

@@ -4,6 +4,12 @@ n1_ip: 10.100.0.50
 n2_ip: 10.100.0.51
 n3_ip: 10.100.0.52
 
+#other ips for prometheus and alrtmgmt 
+#10.100.0.40
+#10.100.0.41
+#10.100.0.30
+#10.100.0.31
+
 #consul unpack directory
 consul_unpack_dir: /tmp/consul/
 
